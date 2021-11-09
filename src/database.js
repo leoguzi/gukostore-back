@@ -8,8 +8,8 @@ if (process.env.NODE_ENV === 'prod') {
   connConfig = {
     connectionString: process.env.DATABASE_URL,
     ssl: {
-      rejectUnauthorized: false,
-    },
+      rejectUnauthorized: false
+    }
   };
 } else {
   connConfig = {
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'prod') {
     password: process.env.DB_PASSWORD,
     port: parseInt(process.env.DB_PORT, 10),
     host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE
   };
 }
 
