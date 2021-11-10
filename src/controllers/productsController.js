@@ -41,7 +41,7 @@ async function productById(req, res) {
   try {
     let product = await connection.query(`${productsQuery} WHERE id=$1;`, [id]);
     const images = await connection.query(`${imagesQuery} WHERE id_product=$1;`, [id]);
-    const categories = await connection.query(`${categoriesQuery} WHERE product_category.id_product=$1`, [id])
+    const categories = await connection.query(`${categoriesQuery} WHERE product_category.id_product=$1;`, [id])
     product = {
       ...product.rows[0],
       images: images.rows.map((image) => image.url),
