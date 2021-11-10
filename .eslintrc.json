@@ -5,13 +5,18 @@
     "jest/globals": true
   },
   "extends": [
-    "airbnb-base"
+    "airbnb-base",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
   "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "import/extensions": [
       "error",
       {
