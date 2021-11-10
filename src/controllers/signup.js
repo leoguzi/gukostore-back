@@ -1,9 +1,8 @@
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import connection from '../database.js';
-import app from '../app.js';
 
-app.post('/signup', async (req, res) => {
+async function postSignup(req, res) {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
@@ -43,4 +42,6 @@ app.post('/signup', async (req, res) => {
     res.sendStatus(500);
     console.log(error);
   }
-});
+}
+
+export { postSignup };

@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import connection from '../database.js';
 import app from '../app.js';
 
-app.post('/signin', async (req, res) => {
+async function postSignin(req, res) {
   const schema = Joi.object({
     email: Joi.string()
       .email({
@@ -63,4 +63,6 @@ app.post('/signin', async (req, res) => {
     console.log(error);
     return res.sendStatus(500);
   }
-});
+}
+
+export { postSignin };
