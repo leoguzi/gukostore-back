@@ -8,10 +8,13 @@ async function postSignup(req, res) {
     email: Joi.string().email().required(),
     address: Joi.string().min(5).required(),
     password: Joi.string().min(5).required(),
-    passwordConfirmation: Joi.string().min(5).required(),
+    passwordConfirmation: Joi.string().min(5).required()
   });
 
   const value = schema.validate(req.body);
+  if (value.error) {
+    return res.sendStatus(400);
+  }
   const { name, email, address, password, passwordConfirmation } = req.body;
 
   if (password !== passwordConfirmation) {
@@ -37,11 +40,12 @@ async function postSignup(req, res) {
         VALUES ($1, $2, $3, $4)`,
       [name, email, passwordHash, address]
     );
-    res.sendStatus(201);
+    return res.sendStatus(201);
   } catch (error) {
-    res.sendStatus(500);
     console.log(error);
+    return res.sendStatus(500);
+
   }
 }
 
-export { postSignup };
+export default postSignup;

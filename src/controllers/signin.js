@@ -8,14 +8,17 @@ async function postSignin(req, res) {
     email: Joi.string()
       .email({
         minDomainSegments: 2,
-        tlds: { allow: ['com', 'net'] },
+        tlds: { allow: ['com', 'net'] }
       })
       .required(),
-    password: Joi.string().min(5).required(),
+    password: Joi.string().min(5).required()
   });
 
   try {
     const value = await schema.validateAsync(req.body);
+    if (value.error) {
+      return res.sendStatus(400);
+    }
     const { email, password } = req.body;
     const result = await connection.query(
       `SELECT * FROM users
@@ -54,14 +57,14 @@ async function postSignin(req, res) {
         `,
         [token, user.id]
       );
-      res.send({ token, name: user.name }).status(200);
-    } else {
+      return res.send({ token, name: user.name }).status(200);
+    } 
       return res.sendStatus(401);
-    }
+    
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);
   }
 }
 
-export { postSignin };
+export default postSignin;
