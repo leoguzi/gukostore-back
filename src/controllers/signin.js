@@ -29,7 +29,7 @@ app.post('/signin', async (req, res) => {
       `
         SELECT * FROM users
         JOIN sessions 
-        ON users.id = sessions."userId"
+        ON users.id = sessions.id_user
         WHERE email = $1
     `,
       [email]
@@ -50,10 +50,10 @@ app.post('/signin', async (req, res) => {
       await connection.query(
         `
           INSERT INTO sessions 
-          ("userId", token) 
+          (token, id_user) 
           VALUES ($1, $2)
         `,
-        [user.id, token]
+        [token, user.id]
       );
       res.send({ token, name: user.name }).status(200);
     } else {

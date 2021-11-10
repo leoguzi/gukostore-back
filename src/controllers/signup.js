@@ -34,9 +34,9 @@ app.post('/signup', async (req, res) => {
     const passwordHash = bcrypt.hashSync(password, 11);
     await connection.query(
       `INSERT INTO users
-        (name, email, address, password) 
+        (name, email, password, address) 
         VALUES ($1, $2, $3, $4)`,
-      [name, email, address, passwordHash]
+      [name, email, passwordHash, address]
     );
     res.sendStatus(201);
   } catch (error) {
