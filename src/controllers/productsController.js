@@ -31,7 +31,7 @@ async function getProducts(req, res) {
     res.status(200).send(productsArray);
   } catch (error) {
     console.log(error);
-    res.sendStatud(500);
+    res.sendStatus(500);
   }
 }
 

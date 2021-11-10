@@ -6,6 +6,7 @@ let connConfig = {};
 
 if (process.env.NODE_ENV === 'prod') {
   connConfig = {
+    
     connectionString: process.env.DATABASE_URL,
     ssl: {
       rejectUnauthorized: false
