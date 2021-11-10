@@ -2,14 +2,13 @@ import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import connection from '../database.js';
-import app from '../app.js';
 
 async function postSignin(req, res) {
   const schema = Joi.object({
     email: Joi.string()
       .email({
         minDomainSegments: 2,
-        tlds: { allow: ['com', 'net', 'com.br'] },
+        tlds: { allow: ['com', 'net'] },
       })
       .required(),
     password: Joi.string().min(5).required(),
@@ -20,7 +19,7 @@ async function postSignin(req, res) {
     const { email, password } = req.body;
     const result = await connection.query(
       `SELECT * FROM users
-        WHERE email = $1`,
+        WHERE email = $1;`,
       [email]
     );
     const user = result.rows[0];
@@ -30,7 +29,7 @@ async function postSignin(req, res) {
         SELECT * FROM users
         JOIN sessions 
         ON users.id = sessions.id_user
-        WHERE email = $1
+        WHERE email = $1;
     `,
       [email]
     );
@@ -38,7 +37,7 @@ async function postSignin(req, res) {
     if (loginUser.rows.length) {
       await connection.query(
         `
-          DELETE FROM sessions WHERE id = $1
+          DELETE FROM sessions WHERE id = $1;
         `,
         [loginUser.rows[0].id]
       );
@@ -51,7 +50,7 @@ async function postSignin(req, res) {
         `
           INSERT INTO sessions 
           (token, id_user) 
-          VALUES ($1, $2)
+          VALUES ($1, $2);
         `,
         [token, user.id]
       );
