@@ -29,10 +29,10 @@ async function getProducts(req, res) {
       return completeProduct;
     });
 
-    res.status(200).send(productsArray);
+    return res.status(200).send(productsArray);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 }
 
