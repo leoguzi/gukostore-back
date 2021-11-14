@@ -3,7 +3,7 @@ import cors from 'cors';
 import  postSignup  from './controllers/signup.js';
 import  postSignin  from './controllers/signin.js';
 import { getProducts, productById } from './controllers/productsController.js';
-import postOrder from './controllers/ordersController.js';
+import { getOrders, postOrder } from './controllers/ordersController.js';
 
 const app = express();
 app.use(cors());
@@ -18,5 +18,6 @@ app.get('/products/:id', productById);
 
 // ORDERS
 app.post('/orders', postOrder);
+app.get('/orders', getOrders);
 
 export default app;
