@@ -20,15 +20,13 @@ async function postOrder(req, res) {
                             INSERT INTO orders (id_user, card_number)
                                 VALUES ($1, $2) RETURNING id;`,
             [session.rows[0].id_user, cardNumber]);
-        
         products.forEach(async (product) => {
             const { idProduct, quantity } = product
             await connection.query(`INSERT INTO order_product (id_product, id_order, quantity) VALUES ($1, $2, $3);`,
                 [idProduct, order.rows[0].id, quantity]);
-        }); 
+        });
         return res.sendStatus(201);
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
     

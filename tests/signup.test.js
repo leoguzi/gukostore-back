@@ -25,7 +25,7 @@ describe('POST /signup', () => {
       email: 'testtest@driven.com',
       address: 'Rua Driven Education, 123',
       password: 'test123',
-      passwordConfirmation: 'test1234',
+      passwordConfirmation: 'test1234'
     };
 
     const result = await supertest(app).post('/signup').send(body);
@@ -38,7 +38,7 @@ describe('POST /signup', () => {
       email: 'testtest@driven.com',
       address: 'Rua Driven Education, 123',
       password: 'test123',
-      passwordConfirmation: 'test123',
+      passwordConfirmation: 'test123'
     };
 
     const result = await supertest(app).post('/signup').send(body);
@@ -51,7 +51,7 @@ describe('POST /signup', () => {
       email: 'testcorrect@driven.com',
       address: 'Rua Driven Education, 123',
       password: 'test321',
-      passwordConfirmation: 'test321',
+      passwordConfirmation: 'test321'
     };
 
     const result = await supertest(app).post('/signup').send(body);

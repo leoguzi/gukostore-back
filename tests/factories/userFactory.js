@@ -5,12 +5,12 @@ import connection from '../../src/database.js';
 
 export default async function createUser() {
   let userData = {
-    name: faker.name.findName(),
+    name: faker.lorem.words(2),
     email: faker.internet.email().toLowerCase(),
     address: faker.lorem.words(50),
     password: '123456',
     passwordConfirmation: '123456',
-    hashedPassword: bcrypt.hashSync('123456', 10),
+    hashedPassword: bcrypt.hashSync('123456', 10)
   };
 
   const insertedUser = await connection.query(
