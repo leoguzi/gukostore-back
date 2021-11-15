@@ -16,7 +16,7 @@ describe('POST /signup', () => {
   afterAll(async () => {
     await connection.query(`
       DELETE FROM users;`);
-    connection.end();
+    await connection.end();
   });
 
   it('returns 400 for invalid password confirmation', async () => {

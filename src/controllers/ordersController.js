@@ -64,7 +64,6 @@ async function getOrders(req, res) {
                 [orders.rows[i].id]);
             userOrders.push({ id: orders.rows[i].id, itens: itens.rows });
         }
-        console.log(await Promise.all(userOrders))
          return res.status(200).send(userOrders);
     } catch (error) {
         console.log(error);
