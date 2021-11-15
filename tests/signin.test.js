@@ -1,7 +1,7 @@
 import '../src/setup.js';
 import supertest from 'supertest';
 import app from '../src/app.js';
-import createUser from '../tests/factories/userFactory.js';
+import createUser from './factories/userFactory.js';
 import connection from '../src/database.js';
 
 async function clearDatabase() {
@@ -17,7 +17,7 @@ describe('POST /signin', () => {
   });
 
   afterAll(async () => {
-    connection.end();
+    await connection.end();
   });
 
   it('Returns 401 if wrong password', async () => {
@@ -35,7 +35,7 @@ describe('POST /signin', () => {
     expect(result.status).toEqual(200);
     expect(result.body).toEqual({
       name: newUser.name,
-      token: expect.any(String),
+      token: expect.any(String)
     });
   });
 
