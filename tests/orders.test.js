@@ -111,8 +111,7 @@ describe('GET /orders', () => {
     it('Returns an array with the user orders information', async () => {
         const result = await supertest(app).get('/orders').set(config);
         expect(result.status).toEqual(200);
-        expect(result.body).toEqual(expect.any(Array))
-
+        expect(result.body).toEqual(expect.any(Array));
     });
 
     afterEach(async () => {
