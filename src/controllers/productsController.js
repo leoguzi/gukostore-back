@@ -54,13 +54,47 @@ async function productById(req, res) {
   }
 }
 
-async function searchProducts(req, res) {
+async function productsByCategory(req, res) {
+  const { category } = req.params;
+  if (!category) {
+    return res.status(400).send({message: 'Bad Request!'})
+  }
   try {
-    res.status(200).send({ message: 'sucess!' });
+     const result = await connection.query(`SELECT id FROM categories WHERE name=$1;`, [category]);
+  if (result.rowCount === 0) {
+    return res.status(400).send({ message: 'Bad request.' });
+  }
+    const idCategory  = result.rows[0].id;
+    const products = await connection.query(`
+      SELECT products.* FROM products
+        JOIN product_category
+          ON products.id=product_category.id_product
+            WHERE product_category.id_category=$1;`, [idCategory]);
+    console.log(products.rows);
+
+    const categories = await connection.query(`${categoriesQuery};`);
+    const images = await connection.query(`${imagesQuery};`);
+
+    const productsArray = products.rows.map((product) => {
+      const completeProduct = { ...product, images: [], categories: [] };
+      categories.rows.forEach((cat) => {
+        if (cat.id_product === product.id) {
+          completeProduct.categories.push(cat.name);
+        }
+      });
+      images.rows.forEach((image) => {
+        if (image.id_product === product.id) {
+          completeProduct.images.push(image.url);
+        }
+      });
+      return completeProduct;
+    });
+
+    return res.status(200).send(productsArray);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 }
 
-export { getProducts, productById, searchProducts };
+export { getProducts, productById, productsByCategory };
